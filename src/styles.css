@@ -91,6 +91,7 @@ tree-node-checkbox {
   border: 1px solid;
   height: 33px;
   padding: 2px 5px;
+  font-weight: bold;
 }
 
 
@@ -98,6 +99,8 @@ tree-node-checkbox {
   background: red;
   border: 1px solid;
   height: 33px;
+  color: white;
+  font-weight: bold;
   padding: 2px 5px;
 }
 button{
@@ -113,4 +116,3 @@ button{
   margin-left: 10px;
   border: 1px solid #0b0a0a;
 }
-[hidden] { display: none !important;}

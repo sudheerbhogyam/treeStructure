@@ -17,27 +17,14 @@ export class AppComponent {
   title = 'treeStructure';
   nodes = [
     {
-      "uuid" :"1",
       name: 'Root Section',
       isTerminal: false,
       children: [
-        { name: 'Section 1.1',"uuid" :"1.1" ,isTerminal: true},
-        { name: 'Section 1.2',"uuid" :"1.2" }
+        { name: 'Section 1.1',isTerminal: true},
+        { name: 'Section 1.2'}
       ]
      },
-    // {
-    //   name: 'Section 2',
-    //   "uuid" :"2",
-    //   children: [
-    //     { name: 'Section 2.1',"uuid" :"2.1",children: [] },
-    //     { name: 'Section 2.2',"uuid" :"2.2", children: [
-    //       {name: 'Section 2.2.1',"uuid" :"2.2.1"}
-    //     ] }
-    //   ]
-    // },
-    // { name: 'Section 3' ,"uuid" :"3"},
-    // { name: 'Section 4',"uuid" :"4", children: [] },
-    // { name: 'Section 5', "uuid" :"5",children: null }
+    
   ];
   options: ITreeOptions = {
     
@@ -50,7 +37,7 @@ export class AppComponent {
     
   
   };
-
+// Add node method
 
   addNode(node: any) {
 
@@ -71,39 +58,33 @@ export class AppComponent {
     someNode.expand();
   }
 
-
+//  Edit node method
 editNode(node: any){
   if(node){
-    var name:String = window.prompt("Section Name : ", node.data.name );
-    
-
-    node.data.name= name && name.trim() ? name : node.data.name;
-    node.data.isTerminal=window.confirm("Is terminal ? : ");
-
-    if(node.data.isTerminal){
-      if(node.data.children && node.data.children.length > 0 && window.confirm("Do you want to Delete All Sub Sections ?") )
-        node.data.children= [];
-    }
+  
     this.tree.treeModel.update();
 
   }
 
 }
-
+// Delete node method
   deleteNode(node :any){
-    
-      if(node.findPreviousNode(true)){
-        var children = node.findPreviousNode(true).data.children;
+      console.log(node.data)
+      console.log(node.parent.data)
+      if(node.parent){
+        var children = node.parent.data.children;
 
-        if(! node.findPreviousNode(true).data.children){
-          node.findPreviousNode(true).data.children= [];
+        if(! node.parent.data.children){
+          node.parent.data.children= [];
           children=[];
         }
 
-        node.findPreviousNode(true).data.children = children.filter(data =>!(data == node.data));
+        node.parent.data.children = children.filter(data =>!(data == node.data));
         this.tree.treeModel.update();
       }else{
-        this.nodes.filter(data => !(node.data))
+        console.log("Else")
+        this.nodes= this.nodes.filter(data => !(node.data))
+        this.tree.treeModel.update();
       }
   }
 }

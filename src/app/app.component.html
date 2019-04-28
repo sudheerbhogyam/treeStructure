@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 
-<tree-root #tree [nodes]="nodes" [options]="options" [focused]="true">
+<tree-root #tree [nodes]="nodes" [options]="options" [focused]="true" class="mt-2 ml-4">
 
 
   <ng-template #treeNodeTemplate let-node let-index="index">
@@ -9,22 +9,29 @@
     <div class="container-fluid">
       <div id="main" class="row">
         <!-- <span [class]="node.data.name + 'Index'">{{ node.data. }}</span> -->
-        <span  [class]="node.data.name" [class.non-terminal]="!node.data.isTerminal"
-          [class.terminal]="node.data.isTerminal" [class.title]="true"><span>{{ node.data.name}}</span> <span class="ml-4 pr-3"><i class="fas fa-expand-arrows-alt"></i></span></span>
-
-        <span *ngIf="node.isFocused" class="menu">
-          <div [hidden]="node.data.isTerminal">
-            <button (click)="addNode(node)" >Add</button>
-          </div>
-          <div>
-            <button (click)="editNode(node)">Edit</button>
-          </div>
-          <div [hidden]="node.isRoot">
-            <button (click)="deleteNode(node)">Delete</button>
-          </div>
+        <span [class.terminal]="node.data.isTerminal" class="non-terminal">
+          <span>{{ node.data.name}}</span> 
+          <span class="ml-4 pr-3">
+            <i class="fas fa-expand-arrows-alt"></i>
+          </span>
         </span>
-      </div>
+          <span *ngIf="node.isFocused" class="menu">
+            <div [hidden]="node.data.isTerminal">
+              <button (click)="addNode(node)">Add</button>
+            </div>
+            <div>
+              <button (click)="editNode(node)" data-toggle="modal" data-target="#myModal">Edit</button>
+            </div>
+            <div [hidden]="node.isRoot">
+              <button (click)="deleteNode(node)">Delete</button>
+            </div>
+          </span>
+      
 
+        <app-edit-section *ngIf="node.isFocused" [node]="node" ></app-edit-section>
+
+      </div>
+      
     </div>
   </ng-template>
 
